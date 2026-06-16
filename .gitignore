@@ -9,6 +9,7 @@ build/
 # env (never commit secrets)
 .env
 .env.local
+vercel.env
 .env.development.local
 .env.test.local
 .env.production.local
