@@ -1,76 +1,47 @@
 # Mohamed Barre Portfolio
 
-Portfolio website — **frontend** + **backend** (Next.js), database **PostgreSQL (Neon)**.
+Professional portfolio website — Next.js, PostgreSQL (Neon), Admin Dashboard.
 
-## Qaabka Mashruuca
+## Project structure
 
 ```
-Mypotpholiyo/
-├── frontend/     # Website UI — port 3000
-├── backend/      # API + Database — port 3001
-├── DEPLOY.md     # GitHub + Vercel deploy guide
-└── README.md
+Barre/
+├── frontend/          ← Main app (website + API + database)
+│   ├── app/           ← Pages & API routes (/api/*)
+│   ├── components/    ← UI components
+│   ├── lib/server/    ← Database & auth (server only)
+│   └── public/        ← Images & assets
+├── backend/           ← Local dev reference (optional)
+├── vercel.json        ← Build config (root deploy)
+├── vercel.env         ← Upload to Vercel (NOT in Git — secrets)
+└── GITHUB_VERCEL_SETUP.md
 ```
 
-## Deploy (GitHub + Vercel)
+## Quick deploy
 
-**Eeg [DEPLOY.md](./DEPLOY.md)** — tilmaamo buuxa oo GitHub iyo Vercel ah.
+**Full guide:** [GITHUB_VERCEL_SETUP.md](./GITHUB_VERCEL_SETUP.md)
 
-Gaaban:
-1. Push code GitHub
-2. Vercel: deploy `backend/` (DATABASE_URL, JWT_SECRET, FRONTEND_URL)
-3. Vercel: deploy `frontend/` (BACKEND_URL = backend Vercel URL)
+1. Push code to GitHub (`kaafionline079-arch/Barre`)
+2. Vercel → Import repo → Root Directory: **`frontend`**
+3. Import `vercel.env` → Deploy
 
-## Local Development
-
-### 1. Neon PostgreSQL
-
-1. [neon.tech](https://neon.tech) → abuur project
-2. Copy `DATABASE_URL`
-3. Ku dar `backend/.env.local` (eeg `backend/.env.example`)
-
-### 2. Backend
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-`http://localhost:3001`
-
-### 3. Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-`http://localhost:3000`
-
-## Admin Dashboard
+## Admin login
 
 - URL: `/login`
-- Username: `ENGbarre` ama `Barre@gmail.com`
+- Username: `ENGbarre` or `Barre@gmail.com`
 - Password: `Barre@55`
 
-| Tab | Shaqada |
-|-----|---------|
-| **Messages** | Arag & tirtir fariimaha contact form-ka |
-| **Websites** | Ku dar, beddel, tirtir projects |
-| **Images** | Maamul sawirrada website-ka |
+## Local development
 
-## API Endpoints
+```powershell
+cd frontend
+npm install
+# Copy .env.example to .env.local and add DATABASE_URL + JWT_SECRET
+npm run dev
+```
 
-| Method | Endpoint | Sharaxaad |
-|--------|----------|-----------|
-| GET | `/api/projects` | Liiska projects |
-| GET | `/api/images` | Liiska images |
-| POST | `/api/contact` | Dir fariin |
-| GET/DELETE | `/api/messages` | Fariimaha (admin) |
-| POST/PUT/DELETE | `/api/projects` | Projects CRUD (admin) |
-| POST/PUT/DELETE | `/api/images` | Images CRUD (admin) |
-| POST | `/api/auth/login` | Admin login |
+Open: `http://localhost:3000`
 
-**MUHIIM:** Website-ka fur `localhost:3000` (frontend), maaha `localhost:3001`.
+## Health check
+
+`GET /api/health` — confirms Neon database connection.
