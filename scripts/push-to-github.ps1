@@ -8,7 +8,7 @@ Set-Location $repoRoot
 
 Write-Host ""
 Write-Host "=== Barre Portfolio - GitHub Push ===" -ForegroundColor Cyan
-Write-Host "Repository: https://github.com/kaafionline079-arch/Barre" -ForegroundColor Gray
+Write-Host "Repository: https://github.com/kaafionline079-arch/Barre-Portfolio" -ForegroundColor Gray
 Write-Host ""
 
 # Check git
@@ -44,7 +44,7 @@ if ([string]::IsNullOrWhiteSpace($tokenPlain)) {
     exit 1
 }
 
-$remoteUrl = "https://kaafionline079-arch:$tokenPlain@github.com/kaafionline079-arch/Barre.git"
+$remoteUrl = "https://kaafionline079-arch:$tokenPlain@github.com/kaafionline079-arch/Barre-Portfolio.git"
 
 Write-Host ""
 Write-Host "Pushing to GitHub..." -ForegroundColor Cyan
@@ -54,7 +54,7 @@ git push $remoteUrl main --force-with-lease
 if ($LASTEXITCODE -eq 0) {
     Write-Host ""
     Write-Host "SUCCESS! Code pushed to GitHub." -ForegroundColor Green
-    Write-Host "Check: https://github.com/kaafionline079-arch/Barre" -ForegroundColor Green
+    Write-Host "Check: https://github.com/kaafionline079-arch/Barre-Portfolio" -ForegroundColor Green
     Write-Host ""
     Write-Host "Next: Go to Vercel -> Import this repo -> Root Directory: frontend" -ForegroundColor Cyan
     Write-Host "Import vercel.env for environment variables" -ForegroundColor Cyan
@@ -65,4 +65,4 @@ if ($LASTEXITCODE -eq 0) {
 }
 
 # Clear token from remote URL in git config (security)
-git remote set-url origin https://github.com/kaafionline079-arch/Barre.git
+git remote set-url origin https://github.com/kaafionline079-arch/Barre-Portfolio.git
