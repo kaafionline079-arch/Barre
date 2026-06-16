@@ -1,0 +1,144 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { Menu, X, Moon, Sun, Home, User, Briefcase, LayoutGrid, Award, Mail } from "lucide-react"
+import { SmartImage } from "@/components/smart-image"
+import { getApiUrl } from "@/lib/api"
+
+export function Navigation() {
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [logoUrl, setLogoUrl] = useState("/logo.png")
+
+  useEffect(() => {
+    fetch(getApiUrl("/api/images?section=logo"))
+      .then((r) => r.json())
+      .then((data) => { if (data.images?.[0]?.url) setLogoUrl(data.images[0].url) })
+      .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50)
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const isDark = localStorage.getItem("darkMode") !== "false"
+    setIsDarkMode(isDark)
+    document.documentElement.classList.toggle("dark", isDark)
+  }, [])
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode
+    setIsDarkMode(newDarkMode)
+    localStorage.setItem("darkMode", String(newDarkMode))
+    document.documentElement.classList.toggle("dark", newDarkMode)
+  }
+
+  const navLinks = [
+    { href: "#home", label: "Home", icon: Home },
+    { href: "#about", label: "About", icon: User },
+    { href: "#services", label: "Services", icon: Briefcase },
+    { href: "#portfolio", label: "Portfolio", icon: LayoutGrid },
+    { href: "#experience", label: "Experience", icon: Award },
+    { href: "#contact", label: "Contact", icon: Mail },
+  ]
+
+  const handleDownloadCV = () => {
+    const link = document.createElement("a")
+    link.href = "/cv/mohamed-barre-cv.pdf"
+    link.download = "Mohamed-Barre-CV.pdf"
+    link.click()
+  }
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-sm"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20 gap-4">
+          <a href="#home" className="flex items-center flex-shrink-0">
+            <SmartImage
+              src={logoUrl}
+              alt="MOHA Creative"
+              width={120}
+              height={45}
+              className="h-8 sm:h-9 lg:h-14 w-auto object-contain hover:scale-105 transition-transform duration-300"
+              priority
+            />
+          </a>
+
+          <div className="hidden md:flex items-center gap-1 lg:gap-2 flex-1 justify-center">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="flex items-center gap-1.5 text-sm lg:text-base font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 px-3 lg:px-4 py-2 rounded-lg transition-all whitespace-nowrap"
+              >
+                <link.icon className="h-4 w-4 shrink-0" />
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          <div className="hidden md:flex items-center gap-2">
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-lg hover:bg-primary/10 transition-colors"
+              aria-label="Toggle dark mode"
+            >
+              {isDarkMode ? <Sun className="h-5 w-5 text-primary" /> : <Moon className="h-5 w-5 text-primary" />}
+            </button>
+            <Button size="sm" className="hidden lg:inline-flex px-6 shadow-lg shadow-primary/25" onClick={handleDownloadCV}>
+              Download CV
+            </Button>
+            <Button size="sm" variant="outline" className="lg:hidden" onClick={handleDownloadCV}>
+              CV
+            </Button>
+          </div>
+
+          <button
+            className="md:hidden p-2 ml-auto"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+
+        {isMobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-border/50 animate-fade-in">
+            <div className="flex flex-col gap-2">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary px-3 py-2 rounded-lg hover:bg-primary/5 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <link.icon className="h-4 w-4" />
+                  {link.label}
+                </a>
+              ))}
+              <div className="flex items-center gap-2 pt-2">
+                <button onClick={toggleDarkMode} className="p-2 rounded-lg hover:bg-primary/10" aria-label="Toggle dark mode">
+                  {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                </button>
+                <Button size="sm" className="flex-1" onClick={handleDownloadCV}>
+                  Download CV
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  )
+}
