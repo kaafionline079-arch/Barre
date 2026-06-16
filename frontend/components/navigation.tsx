@@ -26,7 +26,7 @@ export function Navigation() {
   }, [])
 
   useEffect(() => {
-    const isDark = localStorage.getItem("darkMode") !== "false"
+    const isDark = localStorage.getItem("darkMode") === "true"
     setIsDarkMode(isDark)
     document.documentElement.classList.toggle("dark", isDark)
   }, [])
@@ -58,7 +58,7 @@ export function Navigation() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-sm"
+          ? "bg-background/90 backdrop-blur-xl border-b border-primary/15 shadow-sm shadow-primary/5"
           : "bg-transparent"
       }`}
     >
@@ -80,7 +80,7 @@ export function Navigation() {
               <a
                 key={link.href}
                 href={link.href}
-                className="flex items-center gap-1.5 text-sm lg:text-base font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 px-3 lg:px-4 py-2 rounded-lg transition-all whitespace-nowrap"
+                className="flex items-center gap-1.5 text-sm lg:text-base font-medium text-muted-foreground hover:text-primary hover:bg-primary/10 px-3 lg:px-4 py-2 rounded-lg transition-all whitespace-nowrap"
               >
                 <link.icon className="h-4 w-4 shrink-0" />
                 {link.label}
@@ -96,7 +96,7 @@ export function Navigation() {
             >
               {isDarkMode ? <Sun className="h-5 w-5 text-primary" /> : <Moon className="h-5 w-5 text-primary" />}
             </button>
-            <Button size="sm" className="hidden lg:inline-flex px-6 shadow-lg shadow-primary/25" onClick={handleDownloadCV}>
+            <Button size="sm" className="hidden lg:inline-flex px-6 shadow-lg shadow-primary/30 bg-primary hover:bg-primary/90 text-primary-foreground" onClick={handleDownloadCV}>
               Download CV
             </Button>
             <Button size="sm" variant="outline" className="lg:hidden" onClick={handleDownloadCV}>

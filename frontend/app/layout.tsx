@@ -18,16 +18,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="scroll-smooth dark">
+    <html lang="en" className="scroll-smooth">
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              if (localStorage.getItem('darkMode') === 'false') {
-                document.documentElement.classList.remove('dark')
-              } else {
+              if (localStorage.getItem('darkMode') === 'true') {
                 document.documentElement.classList.add('dark')
-                localStorage.setItem('darkMode', 'true')
+              } else {
+                document.documentElement.classList.remove('dark')
+                localStorage.setItem('darkMode', 'false')
               }
             `,
           }}
