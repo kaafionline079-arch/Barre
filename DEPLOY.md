@@ -12,7 +12,11 @@ Tani waxay xallisaa build error-ka `EEXIST` (laba Next.js isku build).
 - Framework: **Next.js** (maaha "Services")
 
 ### 2. Root Directory
-Dooro: **`frontend`**
+**Labada mid dooro mid:**
+
+**A (Recommended):** Vercel → Settings → General → Root Directory → `frontend`
+
+**Ama B:** Root Directory ha ahaado `./` (root) — `vercel.json` + `package.json` root-ka ayaa frontend u build gareeya.
 
 ### 3. Environment Variables
 
