@@ -22,7 +22,12 @@ export async function POST(request: NextRequest) {
 
     const token = createToken(verifiedUser)
     return jsonResponse({ success: true, token })
-  } catch {
-    return jsonResponse({ error: "Login failed" }, 500)
+  } catch (error) {
+    console.error("Login error:", error)
+    const message =
+      error instanceof Error && error.message.includes("DATABASE_URL")
+        ? "Database not configured. Add DATABASE_URL on Vercel."
+        : "Login failed. Check database connection and try again."
+    return jsonResponse({ error: message }, 500)
   }
 }

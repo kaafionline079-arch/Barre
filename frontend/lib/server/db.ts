@@ -83,15 +83,11 @@ async function initSchema() {
 }
 
 async function seedAdminUser(sql: ReturnType<typeof neon>) {
-  const existing = await sql`
-    SELECT id FROM admin_users WHERE username = 'ENGbarre' LIMIT 1
-  `
-  if (existing.length > 0) return
-
   const passwordHash = await hashPassword("Barre@55")
   await sql`
     INSERT INTO admin_users (username, email, password_hash)
     VALUES ('ENGbarre', 'Barre@gmail.com', ${passwordHash})
+    ON CONFLICT (username) DO NOTHING
   `
 }
 
