@@ -1,27 +1,20 @@
-# ⚠️ VERCEL — AKHRI MARKA HORE
+# Vercel Deploy — Root Directory lama dooran karo
 
-## Deploy button disabled? — Sidan xali:
+Haddii **frontend** Root Directory aadan dooran karin, isticmaal root `./`
 
-### ❌ HA DOORAN: "Services"
-### ✅ DOORO: "Next.js"
-
----
-
-## Settings saxda ah:
+## Vercel Settings:
 
 | Setting | Value |
 |---------|--------|
-| **Framework Preset** | **Next.js** (maaha Services!) |
-| **Root Directory** | **frontend** |
-| **Branch** | main |
+| Framework | **Next.js** (maaha Services) |
+| Root Directory | `./` (root — default) |
+| Install Command | *auto from vercel.json* |
+| Build Command | *auto from vercel.json* |
 
-## Environment Variables (Import vercel.env):
-
+## Environment Variables:
 - `DATABASE_URL`
 - `JWT_SECRET`
 
-Dooro: Production + Preview + Development
+## vercel.json (root) wuxuu build gareeyaa frontend/ automatically.
 
-## Deploy → Done!
-
-Test: `/api/health` and `/login` (ENGbarre / Barre@55)
+Redeploy kadib push.

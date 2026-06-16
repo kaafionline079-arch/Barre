@@ -1,0 +1,15 @@
+{
+  "name": "barre-portfolio",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "cd frontend && npm run build",
+    "dev": "cd frontend && npm run dev",
+    "vercel-build": "cd frontend && npm install && npm run build"
+  },
+  "dependencies": {
+    "next": "14.2.16",
+    "react": "^18",
+    "react-dom": "^18"
+  }
+}
