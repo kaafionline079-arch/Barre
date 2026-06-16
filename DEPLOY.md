@@ -1,91 +1,66 @@
-# Deploy: GitHub + Vercel (Hal Project — Amaan)
+# Deploy: GitHub + Vercel (Hal Project)
 
-Mashruucan wuxuu isticmaalaa **Vercel Services** — frontend + backend hal domain, backend-ka waa qarsoon.
-
-```
-User → yoursite.com/backend-api/projects
-     → (frontend proxy) → /_/backend/api/projects
-     → Neon PostgreSQL
-```
-
-**Dadku ma arkaan** `/_/backend` — kaliya `/backend-api` ayaa la isticmaalaa.
+Mashruucan wuxuu hadda **hal Next.js app** ah (`frontend/`) — API + website isku mid.
+Tani waxay xallisaa build error-ka `EEXIST` (laba Next.js isku build).
 
 ---
 
-## Tallaabada 1 — GitHub (hore u dhameeyey)
+## Vercel Setup
 
-Repo: **https://github.com/mohamedarap2024/Barre**
+### 1. Import repo
+- **mohamedarap2024/Barre**
+- Framework: **Next.js** (maaha "Services")
 
-Hubi in `vercel.json` uu repo-ga ku jiro (root folder).
+### 2. Root Directory
+Dooro: **`frontend`**
 
----
+### 3. Environment Variables
 
-## Tallaabada 2 — Vercel Deploy
-
-1. Tag [vercel.com/new](https://vercel.com/new)
-2. Import repo: **mohamedarap2024/Barre**
-3. **Framework Preset:** dooro **Services** (sida screenshot-kaaga)
-4. Hubi in Vercel uu arko:
-   - `frontend` → `/`
-   - `backend` → `/_/backend`
-5. **Root Directory:** `./` (root — ha beddelin)
-
-### Environment Variables (kaliya 2 ku dar!)
+Ku dar Vercel → Settings → Environment Variables (Production + Preview):
 
 | Name | Value |
 |------|--------|
-| `DATABASE_URL` | Neon PostgreSQL connection string-kaaga |
-| `JWT_SECRET` | String dheer random ah (tusaale 32+ characters) |
+| `DATABASE_URL` | Neon PostgreSQL connection string |
+| `JWT_SECRET` | String dheer random ah |
 
-> `BACKEND_URL` iyo `FRONTEND_URL` Vercel wuu si toos ah u abuuraa — ha ku darin gacanta.
+> **Ha ku darin** `ADMIN_USERNAME` / `ADMIN_PASSWORD` — login wuxuu isticmaalaa database.
+> **Ha ku darin** `FRONTEND_URL` — looma baahna hal project.
 
-6. Click **Deploy**
+Tusaale file: `frontend/vercel.env.example`
+
+### 4. Deploy
 
 ---
 
-## Tallaabada 3 — Tijaabi
+## Kadib deploy
 
 | Wax | URL |
 |-----|-----|
-| Website | `https://barre-xxx.vercel.app` |
-| Admin login | `https://barre-xxx.vercel.app/login` |
-| API (proxy) | `https://barre-xxx.vercel.app/backend-api/projects` |
+| Website | `https://barre.vercel.app` |
+| Admin | `https://barre.vercel.app/login` |
+| API | `https://barre.vercel.app/api/projects` |
 
-**Backend toos ah** (`/_/backend`) → **404** (amaan) ✅
-
-**Admin login:**
-- Username: `ENGbarre` ama `Barre@gmail.com`
-- Password: `Barre@55`
-
----
-
-## Sida amniga u shaqeeyo
-
-| Feature | Sharaxaad |
-|---------|-----------|
-| **Proxy** | Browser wuxuu u yeeraa `/backend-api` kaliya |
-| **Qarsoon path** | Backend wuxuu ku jiraa `/_/backend` — lama link gareeyo website-ka |
-| **Middleware** | Backend home page + docs → 404 production-ka |
-| **Admin** | JWT token — login kaliya `/login` frontend-ka |
+**Login:** `ENGbarre` / `Barre@55`
 
 ---
 
 ## Local development
 
 ```powershell
-# Terminal 1
-cd backend
-npm run dev
-
-# Terminal 2
 cd frontend
+npm install
 npm run dev
 ```
 
-Ama Vercel local (dhammaan services):
-```powershell
-vercel dev -L
+Ku dar `frontend/.env.local`:
+```env
+DATABASE_URL=your-neon-url
+JWT_SECRET=local-dev-secret
 ```
+
+Website: `http://localhost:3000`
+
+> `backend/` folder waa development reference — Vercel wuxuu isticmaalaa `frontend/` kaliya.
 
 ---
 
@@ -93,7 +68,7 @@ vercel dev -L
 
 | Dhibaato | Xalka |
 |----------|-------|
-| Deploy button disabled | Hubi `vercel.json` uu repo root-ka ku jiro |
-| Contact form ma shaqeynayo | Hubi `DATABASE_URL` Vercel Environment Variables |
-| Admin login failed | Hubi `JWT_SECRET` + `DATABASE_URL` |
-| 404 on `/backend-api` | Redeploy kadib `vercel.json` push |
+| `EEXIST symlink` error | Hubi Framework = Next.js, Root = `frontend`, maaha Services |
+| Contact form failed | Hubi `DATABASE_URL` Vercel-ka |
+| Login failed | Hubi `DATABASE_URL` + `JWT_SECRET` |
+| Build failed | Redeploy kadib push ugu dambeeyey |

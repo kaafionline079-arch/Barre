@@ -1,14 +1,6 @@
-const API_BASE =
-  typeof window !== "undefined"
-    ? "/backend-api"
-    : process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
-
 export function getApiUrl(path: string) {
   const cleanPath = path.replace(/^\/api\//, "").replace(/^\//, "")
-  if (API_BASE.startsWith("http")) {
-    return `${API_BASE}/api/${cleanPath}`
-  }
-  return `${API_BASE}/${cleanPath}`
+  return `/api/${cleanPath}`
 }
 
 export function getAuthToken() {
